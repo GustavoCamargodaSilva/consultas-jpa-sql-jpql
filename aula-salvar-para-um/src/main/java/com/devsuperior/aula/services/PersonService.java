@@ -1,5 +1,6 @@
 package com.devsuperior.aula.services;
 
+import com.devsuperior.aula.dto.PersonDTO;
 import com.devsuperior.aula.dto.PersonDepartmentDTO;
 import com.devsuperior.aula.entities.Department;
 import com.devsuperior.aula.entities.Person;
@@ -44,12 +45,31 @@ public class PersonService {
 
         Department dept = departmentRepository.getReferenceById(dto.getDepartment().getId()); //terceiro passo instancia um objeto buscando pelo id no banco do department
 
-        //dept.setId(dto.getDepartment().getId()); //quarto passo pegar o departamento do dto e dar um get no id dele
+        dept.setId(dto.getDepartment().getId());
 
         entity.setDepartment(dept); //quinto passo apontar o dept que foi pego na entidade pessoa para associar os dois
 
         entity = repository.save(entity); //sexto passo chamar o repositório para salvar
 
         return new PersonDepartmentDTO(entity); //cria o construtor no departmentdto para retornar
+    }
+
+    public PersonDTO insert(PersonDTO dto){
+
+        Person entity = new Person(); //primeiro passo criar uma entidade para copiar o dto
+
+        entity.setName(dto.getName()); //segundo passo copiar os atributos da entidade dto para a classe criada
+        entity.setSalary(dto.getSalary()); //segundo passo
+
+        //Department dept = departmentRepository.getReferenceById(dto.getDepartmentId()); //terceiro passo instancia um objeto buscando pelo id no banco do department
+
+        Department dept = new Department();
+        dept.setId(dto.getDepartmentId()); //quarto passo pegar o departamento do dto e dar um get no id dele
+
+        entity.setDepartment(dept); //quinto passo apontar o dept que foi pego na entidade pessoa para associar os dois
+
+        entity = repository.save(entity); //sexto passo chamar o repositório para salvar
+
+        return new PersonDTO(entity); //cria o construtor no department para retornar
     }
 }

@@ -13,6 +13,8 @@ import com.devsuperior.aulalazy.dto.EmployeeMinDTO;
 import com.devsuperior.aulalazy.entities.Employee;
 import com.devsuperior.aulalazy.repositories.EmployeeRepository;
 
+import static java.util.Arrays.stream;
+
 @Service
 public class EmployeeService {
 
@@ -35,5 +37,11 @@ public class EmployeeService {
 	public List<EmployeeDepartmentDTO> findEmployeesWithDepartments() {
 		List<Employee> result = repository.findEmployeesWithDepartments();
 		return result.stream().map(x -> new EmployeeDepartmentDTO(x)).collect(Collectors.toList());
-	}	
+	}
+
+	@Transactional(readOnly = true)
+	public List<EmployeeMinDTO> findByName(String name) {
+		List<Employee> result = repository.findByNameIgnoreCase(name);
+		return result.stream().map(x -> new EmployeeMinDTO(x)).toList();
+	}
 }

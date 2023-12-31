@@ -18,6 +18,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<ProductMinProjections> search1(Integer min, Integer max,String beginName);
 
 
+
+
     
 
 
